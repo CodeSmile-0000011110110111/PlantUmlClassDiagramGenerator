@@ -15,8 +15,8 @@ namespace PlantUmlClassDiagramGenerator.Library
             if (syntax is GenericNameSyntax genericName && genericName.TypeArgumentList != null)
             {
                 var count = genericName.TypeArgumentList.Arguments.Count;
-                identifier = $"\"{identifier}`{count}\"";
                 typeArgs = "<" + string.Join(",", genericName.TypeArgumentList.Arguments) + ">";
+                identifier = $"\"{identifier}{typeArgs}\"";
             }
             else if (identifier.StartsWith("@"))
             {
@@ -45,10 +45,12 @@ namespace PlantUmlClassDiagramGenerator.Library
             {
                 parameters[0] = "T";
             }
+
+            var typeArgs = "<" + string.Join(",", parameters) + ">";
             return new TypeNameText
             {
-                Identifier = $"\"{syntax.Identifier.Text}`{paramCount}\"",
-                TypeArguments = "<" + string.Join(",", parameters) + ">",
+                Identifier = $"\"{syntax.Identifier.Text}{typeArgs}\"",
+                TypeArguments = typeArgs,
             };
         }
 
@@ -59,8 +61,8 @@ namespace PlantUmlClassDiagramGenerator.Library
             if (syntax is TypeDeclarationSyntax typeDeclaration && typeDeclaration.TypeParameterList != null)
             {
                 var count = typeDeclaration.TypeParameterList.Parameters.Count;
-                identifier = $"\"{identifier}`{count}\"";
                 typeArgs = "<" + string.Join(",", typeDeclaration.TypeParameterList.Parameters) + ">";
+                identifier = $"\"{identifier}{typeArgs}\"";
             }
             else if (identifier.StartsWith("@"))
             {
