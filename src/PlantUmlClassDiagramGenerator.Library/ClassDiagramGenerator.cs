@@ -158,7 +158,7 @@ namespace PlantUmlClassDiagramGenerator.Library
 
             types.Add(name);
 
-            WriteLine($"class {type} <<struct>> {{");
+            WriteLine($"struct {type} <<struct>> {{");
 
             nestingDepth++;
             base.VisitStructDeclaration(node);
