@@ -31,7 +31,7 @@ namespace PlantUmlClassDiagramGenerator.Library
 
         public static TypeNameText From(GenericNameSyntax syntax)
         {
-            int paramCount = syntax.TypeArgumentList.Arguments.Count;
+            /*int paramCount = syntax.TypeArgumentList.Arguments.Count;
             string[] parameters = new string[paramCount];
             if (paramCount > 1)
             {
@@ -44,9 +44,16 @@ namespace PlantUmlClassDiagramGenerator.Library
             else
             {
                 parameters[0] = "T";
+            }*/
+
+            var typeArgs = string.Empty;
+            if (syntax is GenericNameSyntax genericName && genericName.TypeArgumentList != null)
+            {
+                var count = genericName.TypeArgumentList.Arguments.Count;
+                typeArgs = "<" + string.Join(",", genericName.TypeArgumentList.Arguments) + ">";
             }
 
-            var typeArgs = "<" + string.Join(",", parameters) + ">";
+            //var typeArgs = "<" + string.Join(",", parameters) + ">";
             return new TypeNameText
             {
                 Identifier = $"\"{syntax.Identifier.Text}{typeArgs}\"",
